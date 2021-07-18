@@ -1,0 +1,1374 @@
+<html><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+    <title>MAS | ICICI Bank Ltd.</title>
+    <link rel="icon" href="/Images/FaviconLogo.jpg">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="/Content/assetsNew/css/app.min.css">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="/Content/assetsNew/css/style.css">
+    <link rel="stylesheet" href="/Content/assetsNew/css/components.css">
+    <style>
+        .navbar .headerBadge3 {
+            position: absolute;
+            top: 5px;
+            right: 0px;
+            font-weight: 300;
+            padding: 2px 5px;
+            background: #e83e8c;
+            border-radius: 5px
+        }
+
+        .dropdown-toggle.noAfter::after {
+            content: "";
+            margin: 0;
+            border: none;
+            vertical-align: unset;
+        }        
+    </style>
+    <!-- Custom style CSS -->
+    
+
+
+    
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/HeaderList/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/HeaderList/respond.js/1.3.0/respond.min.js"></script>-->
+    <!-- General JS Scripts -->
+    <script src="/Content/assetsNew/js/app.min.js"></script>
+
+    <!-- Angular Js -->
+    <script src="/Scripts/angular.js"></script>
+    <!-- jQuery UI 1.11.2 -->
+    <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+    </script>
+
+    <!-- JS Libraies -->
+    <!-- Page Specific JS File -->
+    <script src="/Content/assetsNew/js/index2.js"></script>
+    <script src="/Content/assetsNew/js/todo.js"></script>
+    <!-- Template JS File -->
+    <script src="/Content/assetsNew/js/scripts.js"></script>
+    <!-- Custom JS File -->
+    <script src="/Content/assetsNew/js/custom.js"></script>
+
+    <!-- daterangepicker -->
+    <script src="/NewLayoutDesign/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+    <!-- datepicker -->
+    <script src="/NewLayoutDesign/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+    <!-- Bootstrap WYSIHTML5 -->
+    <!-- iCheck -->
+    <script src="" type="text/javascript"></script>
+    <!-- Slimscroll -->
+    <script src="/NewLayoutDesign/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <!-- FastClick -->
+    <script src="/NewLayoutDesign/plugins/fastclick/fastclick.min.js"></script>
+
+    <script>
+        var clicked = false;
+        function bodyUnload() {
+            if (clicked == false)//browser is closed
+            {
+                var request = GetRequest();
+                request.open("POST", "/Home/Logout", false);
+                request.send();
+            }
+        }
+
+        function GetRequest() {
+            var xmlhttp;
+            if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            }
+            else {// code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            return xmlhttp;
+        }
+
+        function GotoErrorPage(request, message, error) {
+            window.location.href = "/Home/ErrorHandling";
+        }
+
+        function MaintainExceptionLog(objException) {
+            $.ajax({
+                url: '/Common/InsertErrorTrackDetails',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ 'objProp': objException }),
+                datatype: "json",
+                beforeSend: function () {
+                    $(".modalBack").show();
+                },
+                complete: function () {
+                    $(".modalBack").hide();
+                },
+                success: function (data) {
+
+                    if (data.ActionResult == "SUCCESS") {
+                        console.log("SUCCESS :: Admin Layout. MaintainExceptionLog");
+                        // alert(data.ActionMessage);
+                        //window.location.reload();
+                    }
+                    else {
+                        console.log("FAIL :: Admin Layout. MaintainExceptionLog");
+                        console.log(data.Result["ActionMessage"]);
+                    }
+                },
+                error: function (request, message, error) {
+                    console.log("ERROR :: Admin Layout. MaintainExceptionLog");
+                    handleException(request, message, error);
+
+                    window.location.href = '/Home/ErrorHandling?PageName=Application.cshtml&amp;MethodName=GetMemoCaseList';
+                }
+            });
+        }
+
+        function ShowLoader() {
+            $(".loader").css('display', 'block');
+        }
+
+        function HideLoader() {
+            $(".loader").css('display', 'none');
+        }
+
+    </script>
+    <style>
+        /*Loader Image*/
+        .Loadermodal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: url('../../Images/Eclipse-1s-200px_1.gif') 50% 50% no-repeat;
+        }
+        /*rgba(99, 85, 85, 0.33)*/
+
+        /* When the body has the loading class, we turn
+        the scrollbar off with overflow:hidden */
+        body.loading {
+            overflow: hidden;
+        }
+
+            /* Anytime the body has the loading class, our
+        modal element will be visible */
+            body.loading .Loadermodal {
+                display: block;
+            }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+    </style>
+
+</head>
+<body class="bg01 light light-sidebar theme-white sidebar-gone">
+    <div class="loader" style="display: none;"></div>
+    <div id="app">
+        <div class="main-wrapper main-wrapper-1">
+
+            <!----------------------------------------------------------------------------------->
+
+            <div class="navbar-bg"></div>
+            <nav class="navbar navbar-expand-lg main-navbar">
+                <div class="form-inline mr-auto">
+                    <ul class="navbar-nav mr-3">
+                        <li>
+                            <a href="/Administration/Dashboard">
+                                <img class="logosize" src="/Content/assetsNew/img/logo01.png">
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <ul class="navbar-nav navbar-right">
+                    <li class="dropdown dropdown-list-toggle">
+                                    <a href="#" class="dropdown-toggle nav-link nav-link-lg noAfter" data-toggle="modal" data-target="#modFavourite" data-backdrop="false" id="lnkFav">
+                                        
+                                        <img width="20" height="20" src="/Content/assetsNew/img/star.png">
+                                        <span class="badge headerBadge3 countFav">4</span>
+                                    </a>
+                                    <div class="modal modal-primary fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modFavourite">
+                                        <div class="modal-dialog modal-sm ModalCenter">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Favourite</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table class="table table-sm" id="tblFavMaster">
+                                                        <tbody id="tblfavourite">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_0" value="2" checked="">
+                                                                                    </td>
+                                                                                    <td><strong>iMemo</strong></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_1" value="3" checked="">
+                                                                                    </td>
+                                                                                    <td><strong>iProcess</strong></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_2" value="4">
+                                                                                    </td>
+                                                                                    <td><strong>IAS</strong></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_3" value="5">
+                                                                                    </td>
+                                                                                    <td><strong>iHelpDesk</strong></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_4" value="6">
+                                                                                    </td>
+                                                                                    <td><strong>EAMS</strong></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_5" value="7" checked="">
+                                                                                    </td>
+                                                                                    <td><strong>LAM</strong></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_6" value="8">
+                                                                                    </td>
+                                                                                    <td><strong>LAMUV</strong></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_7" value="9">
+                                                                                    </td>
+                                                                                    <td><strong>CLOS</strong></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_8" value="10">
+                                                                                    </td>
+                                                                                    <td><strong>NTS</strong></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_9" value="11">
+                                                                                    </td>
+                                                                                    <td><strong>FCRS</strong></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_10" value="12">
+                                                                                    </td>
+                                                                                    <td><strong>CMART</strong></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_11" value="13">
+                                                                                    </td>
+                                                                                    <td><strong>IRIS</strong></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_12" value="15">
+                                                                                    </td>
+                                                                                    <td><strong>VRMS</strong></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_13" value="16" checked="">
+                                                                                    </td>
+                                                                                    <td><strong>eProc</strong></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_14" value="17">
+                                                                                    </td>
+                                                                                    <td><strong>TelecomServices</strong></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_15" value="18">
+                                                                                    </td>
+                                                                                    <td><strong>NEES</strong></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_16" value="19">
+                                                                                    </td>
+                                                                                    <td><strong>Whizible</strong></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_17" value="20">
+                                                                                    </td>
+                                                                                    <td><strong>COLORS</strong></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input type="checkbox" id="chkFavorite_18" value="21">
+                                                                                    </td>
+                                                                                    <td><strong>LAMOthers</strong></td>
+                                                                                </tr>
+
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-warning" id="btnSetFavourite">Set Favourite</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="/Content/assetsNew/img/user.png" class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
+                        <div class="dropdown-menu dropdown-menu-right pullDown">
+                                <div class="dropdown-title">Hi, Shriram Gore</div>
+                                                        <a href="/Home/Logout" class="dropdown-item has-icon text-danger">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <!----------------------------------------------------------------------------------->
+            <!-- Left side column. contains the logo and sidebar -->
+            <!-- Right side column. Contains the navbar and content of the page style="background-image:url(/Images/bg.jpg)-->
+            <div class="main-content" style="min-height: 672px;">
+                
+<link href="/NewLayoutDesign/dist/css/ApplicationListStyle.css" rel="stylesheet">
+<style>
+.bg01{background-image:none;}
+</style>
+<div ng-app="ApplicationList" class="ng-scope">
+    <!-- Small boxes (Stat box) -->
+    <input type="hidden" value="Invoice No|Vendor Name|PO No|Invoice Amt|Submitted By|App Type" id="hdfFovouriteColumn" ng-init="SaveColumnList='Invoice No|Vendor Name|PO No|Invoice Amt|Submitted By|App Type'" autocomplete="off">
+    <input type="hidden" value="eProc" id="hdfAppName" autocomplete="off">
+    <input type="hidden" value="R55Bd9x9HVZY03NSrTZ4tQ==" id="hdfEncodeAppName" autocomplete="off">
+    <input type="hidden" ng-model="PAGE_FROM" name="PAGE_FROM" value="1" id="hdfPageFrom" ng-init="PAGE_FROM=1" autocomplete="off" class="ng-pristine ng-untouched ng-valid ng-not-empty">
+    <input type="hidden" ng-model="PAGE_TO" value="20" id="hdfPageTo" ng-init="PAGE_TO=20" autocomplete="off" class="ng-pristine ng-untouched ng-valid ng-not-empty">
+    <input type="hidden" value="199" id="hdfPageCount" ng-model="PAGE_COUNT" ng-init="PAGE_COUNT=199" autocomplete="off" class="ng-pristine ng-untouched ng-valid ng-not-empty">
+    <input type="hidden" value="20" id="hdfPageSize" ng-model="PAGE_SIZE" ng-init="PAGE_SIZE=20" autocomplete="off" class="ng-pristine ng-untouched ng-valid ng-not-empty">
+    <input type="hidden" ng-model="EmployeeId" id="hdfEmployeeId" value="ban58106" ng-init="EmployeeId='ban58106'" autocomplete="off" class="ng-pristine ng-untouched ng-valid ng-not-empty">
+    <input type="hidden" id="hdfApiPath" value="http://10.78.9.76/eprocmasapi/eProc/API/eProc/GetPendingList" autocomplete="off">
+    <input type="hidden" id="hdfSearchApiPath" ng-model="SearchApiPath" value="http://10.78.9.76/eprocmasapi/eProc/API/eProc/GetSearchPendingList" autocomplete="off" class="ng-pristine ng-untouched ng-valid ng-empty">
+    <input type="hidden" ng-init="AppPath='https://masuat.icicibank.com:82'" autocomplete="off">
+    <input type="hidden" ng-init="BulkDisableApp=''" autocomplete="off">
+    <input type="hidden" ng-init="IsDataShowOnPageAppName='LAMUV'" autocomplete="off">
+    <div ng-controller="ApplicationListController" class="ng-scope">
+        <section class="section mb-2">
+<div class="">
+            <div class="row AppListicon">
+               <!-- <div class="col-lg-6 col-md-6 hidden-xs">
+                    <h1>eProc List
+                    </h1>
+                </div>-->
+                
+                
+    <div class="col-3 text-left">
+ <span class="">
+                            <button tabindex="-1" data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button" aria-expanded="false">
+                                <img src="/Images/hamburger-menu.png">
+                                <span class="caret"></span>
+                            </button>
+                            <ul role="menu" class="dropdown-menu ColumnListPosition" x-placement="bottom-start" style="position: absolute; transform: translate3d(15px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                <!-- ngRepeat: lib in libs --><li ng-repeat="lib in libs" class="ng-scope">
+                                    <label class="ng-binding">
+                                        <input type="checkbox" ng-model="lib.checked" ng-disabled="lib.status == 'disabled'" ng-value="lib.HeaderName" ng-change="SaveFavouriteColumn()" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="Invoice No" disabled="disabled">Invoice No</label>
+                                </li><!-- end ngRepeat: lib in libs --><li ng-repeat="lib in libs" class="ng-scope">
+                                    <label class="ng-binding">
+                                        <input type="checkbox" ng-model="lib.checked" ng-disabled="lib.status == 'disabled'" ng-value="lib.HeaderName" ng-change="SaveFavouriteColumn()" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="Vendor Name">Vendor Name</label>
+                                </li><!-- end ngRepeat: lib in libs --><li ng-repeat="lib in libs" class="ng-scope">
+                                    <label class="ng-binding">
+                                        <input type="checkbox" ng-model="lib.checked" ng-disabled="lib.status == 'disabled'" ng-value="lib.HeaderName" ng-change="SaveFavouriteColumn()" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="PO No">PO No</label>
+                                </li><!-- end ngRepeat: lib in libs --><li ng-repeat="lib in libs" class="ng-scope">
+                                    <label class="ng-binding">
+                                        <input type="checkbox" ng-model="lib.checked" ng-disabled="lib.status == 'disabled'" ng-value="lib.HeaderName" ng-change="SaveFavouriteColumn()" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="Invoice Amt">Invoice Amt</label>
+                                </li><!-- end ngRepeat: lib in libs --><li ng-repeat="lib in libs" class="ng-scope">
+                                    <label class="ng-binding">
+                                        <input type="checkbox" ng-model="lib.checked" ng-disabled="lib.status == 'disabled'" ng-value="lib.HeaderName" ng-change="SaveFavouriteColumn()" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="Submitted By">Submitted By</label>
+                                </li><!-- end ngRepeat: lib in libs --><li ng-repeat="lib in libs" class="ng-scope">
+                                    <label class="ng-binding">
+                                        <input type="checkbox" ng-model="lib.checked" ng-disabled="lib.status == 'disabled'" ng-value="lib.HeaderName" ng-change="SaveFavouriteColumn()" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="App Type">App Type</label>
+                                </li><!-- end ngRepeat: lib in libs -->
+                            </ul>
+                        </span>
+  
+                
+                </div><div class="col-9 text-right">
+                    <a href="/Administration/Dashboard" class="btn btn-info">
+                        <img src="/Images/back.png"></a>
+                    <a class="btn btn-success" title="Refresh" ng-click="PageRefresh()">
+                        <img src="/Images/refresh.png"></a>
+                    <a id="btnSerch" class="btn btn-warning" ng-click="OpenSearchPupop()">
+                        <img src="/Images/search.png"></a>
+        </div>
+        
+            </div>
+    </div>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <div class="row hidden-md" ng-show="IsBulkRequired">
+                                <div class="col-lg-12 col-md-12 col-xs-12" ng-show="IsDataShowOnPageLoad">
+                                    <div class="row hidden-md hidden-lg hidden-sm">
+                                        <div class="col-6">
+                                            <label class="chkcontainer">
+                                                Select All
+                                                <input type="checkbox" ng-model="IsSelectAll" ng-click="SelectAllPendingRequest()" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+
+    <div class="col-6 "><button type="button" class="btn btn-info float-right" ng-click="ApproveRejectAllSelectedRow()">Action</button></div>
+
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <!--After LAM UV change as per IAS arch below line should be commented #Start-->
+                                    <select id="ddlReporteeSearchBy" class="form-control ng-pristine ng-untouched ng-valid ng-empty ng-hide" ng-model="SearchValue" ng-change="FilterpendingList()" ng-show="IS_REPORTEE=='YES'">
+                                        <option value="" selected="selected">Select Reportee</option>
+                                        <!-- ngRepeat: item in ApplicationReporteeList -->
+                                    </select>
+                                    <!--#LAM UV end-->
+                                    <select id="ddlFilterBy" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="FILTER_VALUE" ng-change="ApplyFilterationOnList()" ng-show="ApplicationFilterList.length > 0">
+                                        <option value="" class="ng-binding">Select Module</option>
+                                        <!-- ngRepeat: item in ApplicationFilterList --><option ng-repeat="item in ApplicationFilterList" value="Invoice_Approval" class="ng-binding ng-scope" selected="selected">Invoice_Approval</option><!-- end ngRepeat: item in ApplicationFilterList --><option ng-repeat="item in ApplicationFilterList" value="Asset_Approval" class="ng-binding ng-scope">Asset_Approval</option><!-- end ngRepeat: item in ApplicationFilterList --><option ng-repeat="item in ApplicationFilterList" value="Asset_Acknowledgment" class="ng-binding ng-scope">Asset_Acknowledgment</option><!-- end ngRepeat: item in ApplicationFilterList --><option ng-repeat="item in ApplicationFilterList" value="Po_Approval" class="ng-binding ng-scope">Po_Approval</option><!-- end ngRepeat: item in ApplicationFilterList --><option ng-repeat="item in ApplicationFilterList" value="Payment_Approval" class="ng-binding ng-scope">Payment_Approval</option><!-- end ngRepeat: item in ApplicationFilterList -->
+                                    </select>
+                                    <div><span ng-show="!IsFilterExists" style="color: red" ng-bind="FilterMessage" class="ng-binding ng-hide"></span></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body mt-2">
+                            <div id="no-more-tables">
+                                <table id="tblAppList" class="table-bordered table-striped table-condensed cf" ng-show="IsDataShowOnPageLoad">
+                                    <thead class="cf">
+                                        <tr>
+                                            <th ng-show="IsBulkRequired">
+                                                
+                                                <label class="chkcontainer">
+                                                    <input type="checkbox" ng-model="IsSelectAll" ng-click="SelectAllPendingRequest()" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </th>
+                                            <!-- ngRepeat: lib  in libs --><th ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-binding ng-scope">Invoice No</th><!-- end ngRepeat: lib  in libs --><th ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-binding ng-scope">Vendor Name</th><!-- end ngRepeat: lib  in libs --><th ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-binding ng-scope">PO No</th><!-- end ngRepeat: lib  in libs --><th ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-binding ng-scope">Invoice Amt</th><!-- end ngRepeat: lib  in libs --><th ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-binding ng-scope">Submitted By</th><!-- end ngRepeat: lib  in libs --><th ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-binding ng-scope">App Type</th><!-- end ngRepeat: lib  in libs -->
+                                            <th ng-show="!IsBulkRequired" class="ng-hide">Action</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody id="tbodytblAppList">
+                                        <!-- ngRepeat: row in ApplicationDatalist --><tr ng-repeat="row in ApplicationDatalist" class="ng-scope">
+                                            <td ng-click="rowClicked(row)" ng-show="IsBulkRequired">
+                                                
+                                                <label class="chkcontainer">
+
+                                                    <input type="checkbox" ng-model="row.selected" ng-change="rowSelect()" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <!-- ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding">MASINVOICETEST4</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding ng-hide">MASINVOICETEST4</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Vendor Name</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">C2</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">C2</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">PO No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">IT/PO/S/2020-21/042033</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">IT/PO/S/2020-21/042033</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice Amt</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">2.00</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">2.00</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Submitted By</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">Satish Yadav</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">Satish Yadav</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">App Type</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">TO</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">TO</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs -->
+                                            <td class="text-right ng-hide" ng-show="!IsBulkRequired">
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modAction" ng-click="ApproveRejectPendingRequest(row[GetDetailsBy[0]],row[GetDetailsBy[1]])">Action</button>
+                                            </td>
+
+
+                                        </tr><!-- end ngRepeat: row in ApplicationDatalist --><tr ng-repeat="row in ApplicationDatalist" class="ng-scope">
+                                            <td ng-click="rowClicked(row)" ng-show="IsBulkRequired">
+                                                
+                                                <label class="chkcontainer">
+
+                                                    <input type="checkbox" ng-model="row.selected" ng-change="rowSelect()" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <!-- ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding">INV24FEB2020_11</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding ng-hide">INV24FEB2020_11</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Vendor Name</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">C2</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">C2</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">PO No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">IT/PO/S/2019-20/041439</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">IT/PO/S/2019-20/041439</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice Amt</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">1.00</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">1.00</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Submitted By</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">Ajinkya Karnik</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">Ajinkya Karnik</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">App Type</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">TO</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">TO</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs -->
+                                            <td class="text-right ng-hide" ng-show="!IsBulkRequired">
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modAction" ng-click="ApproveRejectPendingRequest(row[GetDetailsBy[0]],row[GetDetailsBy[1]])">Action</button>
+                                            </td>
+
+
+                                        </tr><!-- end ngRepeat: row in ApplicationDatalist --><tr ng-repeat="row in ApplicationDatalist" class="ng-scope">
+                                            <td ng-click="rowClicked(row)" ng-show="IsBulkRequired">
+                                                
+                                                <label class="chkcontainer">
+
+                                                    <input type="checkbox" ng-model="row.selected" ng-change="rowSelect()" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <!-- ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding">INV24FEB2020_10</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding ng-hide">INV24FEB2020_10</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Vendor Name</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">C2</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">C2</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">PO No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">IT/PO/S/2019-20/041439</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">IT/PO/S/2019-20/041439</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice Amt</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">1.00</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">1.00</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Submitted By</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">Ajinkya Karnik</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">Ajinkya Karnik</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">App Type</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">Thru</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">Thru</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs -->
+                                            <td class="text-right ng-hide" ng-show="!IsBulkRequired">
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modAction" ng-click="ApproveRejectPendingRequest(row[GetDetailsBy[0]],row[GetDetailsBy[1]])">Action</button>
+                                            </td>
+
+
+                                        </tr><!-- end ngRepeat: row in ApplicationDatalist --><tr ng-repeat="row in ApplicationDatalist" class="ng-scope">
+                                            <td ng-click="rowClicked(row)" ng-show="IsBulkRequired">
+                                                
+                                                <label class="chkcontainer">
+
+                                                    <input type="checkbox" ng-model="row.selected" ng-change="rowSelect()" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <!-- ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding">INV24FEB2020_9</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding ng-hide">INV24FEB2020_9</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Vendor Name</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">C2</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">C2</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">PO No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">IT/PO/S/2019-20/041439</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">IT/PO/S/2019-20/041439</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice Amt</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">1.00</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">1.00</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Submitted By</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">Ajinkya Karnik</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">Ajinkya Karnik</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">App Type</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">TO</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">TO</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs -->
+                                            <td class="text-right ng-hide" ng-show="!IsBulkRequired">
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modAction" ng-click="ApproveRejectPendingRequest(row[GetDetailsBy[0]],row[GetDetailsBy[1]])">Action</button>
+                                            </td>
+
+
+                                        </tr><!-- end ngRepeat: row in ApplicationDatalist --><tr ng-repeat="row in ApplicationDatalist" class="ng-scope">
+                                            <td ng-click="rowClicked(row)" ng-show="IsBulkRequired">
+                                                
+                                                <label class="chkcontainer">
+
+                                                    <input type="checkbox" ng-model="row.selected" ng-change="rowSelect()" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <!-- ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding">INV24FEB2020_8</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding ng-hide">INV24FEB2020_8</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Vendor Name</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">C2</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">C2</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">PO No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">IT/PO/S/2019-20/041439</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">IT/PO/S/2019-20/041439</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice Amt</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">1.00</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">1.00</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Submitted By</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">Ajinkya Karnik</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">Ajinkya Karnik</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">App Type</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">TO</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">TO</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs -->
+                                            <td class="text-right ng-hide" ng-show="!IsBulkRequired">
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modAction" ng-click="ApproveRejectPendingRequest(row[GetDetailsBy[0]],row[GetDetailsBy[1]])">Action</button>
+                                            </td>
+
+
+                                        </tr><!-- end ngRepeat: row in ApplicationDatalist --><tr ng-repeat="row in ApplicationDatalist" class="ng-scope">
+                                            <td ng-click="rowClicked(row)" ng-show="IsBulkRequired">
+                                                
+                                                <label class="chkcontainer">
+
+                                                    <input type="checkbox" ng-model="row.selected" ng-change="rowSelect()" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <!-- ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding">INV24FEB2020_7</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding ng-hide">INV24FEB2020_7</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Vendor Name</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">C2</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">C2</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">PO No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">IT/PO/S/2019-20/041439</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">IT/PO/S/2019-20/041439</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice Amt</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">1.00</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">1.00</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Submitted By</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">Ajinkya Karnik</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">Ajinkya Karnik</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">App Type</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">Thru</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">Thru</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs -->
+                                            <td class="text-right ng-hide" ng-show="!IsBulkRequired">
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modAction" ng-click="ApproveRejectPendingRequest(row[GetDetailsBy[0]],row[GetDetailsBy[1]])">Action</button>
+                                            </td>
+
+
+                                        </tr><!-- end ngRepeat: row in ApplicationDatalist --><tr ng-repeat="row in ApplicationDatalist" class="ng-scope">
+                                            <td ng-click="rowClicked(row)" ng-show="IsBulkRequired">
+                                                
+                                                <label class="chkcontainer">
+
+                                                    <input type="checkbox" ng-model="row.selected" ng-change="rowSelect()" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <!-- ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding">INV24FEB2020_6</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding ng-hide">INV24FEB2020_6</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Vendor Name</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">C2</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">C2</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">PO No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">IT/PO/S/2019-20/041439</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">IT/PO/S/2019-20/041439</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice Amt</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">1.00</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">1.00</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Submitted By</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">Ajinkya Karnik</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">Ajinkya Karnik</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">App Type</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">Thru</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">Thru</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs -->
+                                            <td class="text-right ng-hide" ng-show="!IsBulkRequired">
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modAction" ng-click="ApproveRejectPendingRequest(row[GetDetailsBy[0]],row[GetDetailsBy[1]])">Action</button>
+                                            </td>
+
+
+                                        </tr><!-- end ngRepeat: row in ApplicationDatalist --><tr ng-repeat="row in ApplicationDatalist" class="ng-scope">
+                                            <td ng-click="rowClicked(row)" ng-show="IsBulkRequired">
+                                                
+                                                <label class="chkcontainer">
+
+                                                    <input type="checkbox" ng-model="row.selected" ng-change="rowSelect()" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <!-- ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding">INV24FEB2020_5</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding ng-hide">INV24FEB2020_5</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Vendor Name</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">C2</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">C2</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">PO No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">IT/PO/S/2019-20/041439</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">IT/PO/S/2019-20/041439</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice Amt</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">1.00</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">1.00</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Submitted By</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">Ajinkya Karnik</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">Ajinkya Karnik</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">App Type</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">Thru</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">Thru</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs -->
+                                            <td class="text-right ng-hide" ng-show="!IsBulkRequired">
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modAction" ng-click="ApproveRejectPendingRequest(row[GetDetailsBy[0]],row[GetDetailsBy[1]])">Action</button>
+                                            </td>
+
+
+                                        </tr><!-- end ngRepeat: row in ApplicationDatalist --><tr ng-repeat="row in ApplicationDatalist" class="ng-scope">
+                                            <td ng-click="rowClicked(row)" ng-show="IsBulkRequired">
+                                                
+                                                <label class="chkcontainer">
+
+                                                    <input type="checkbox" ng-model="row.selected" ng-change="rowSelect()" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <!-- ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding">INV24FEB2020_4</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding ng-hide">INV24FEB2020_4</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Vendor Name</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">C2</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">C2</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">PO No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">IT/PO/S/2019-20/041439</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">IT/PO/S/2019-20/041439</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice Amt</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">1.00</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">1.00</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Submitted By</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">Ajinkya Karnik</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">Ajinkya Karnik</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">App Type</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">Thru</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">Thru</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs -->
+                                            <td class="text-right ng-hide" ng-show="!IsBulkRequired">
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modAction" ng-click="ApproveRejectPendingRequest(row[GetDetailsBy[0]],row[GetDetailsBy[1]])">Action</button>
+                                            </td>
+
+
+                                        </tr><!-- end ngRepeat: row in ApplicationDatalist --><tr ng-repeat="row in ApplicationDatalist" class="ng-scope">
+                                            <td ng-click="rowClicked(row)" ng-show="IsBulkRequired">
+                                                
+                                                <label class="chkcontainer">
+
+                                                    <input type="checkbox" ng-model="row.selected" ng-change="rowSelect()" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <!-- ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding">INV24FEB2020_3</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding ng-hide">INV24FEB2020_3</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Vendor Name</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">C2</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">C2</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">PO No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">IT/PO/S/2019-20/041439</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">IT/PO/S/2019-20/041439</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice Amt</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">1.00</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">1.00</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Submitted By</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">Ajinkya Karnik</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">Ajinkya Karnik</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">App Type</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">Thru</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">Thru</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs -->
+                                            <td class="text-right ng-hide" ng-show="!IsBulkRequired">
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modAction" ng-click="ApproveRejectPendingRequest(row[GetDetailsBy[0]],row[GetDetailsBy[1]])">Action</button>
+                                            </td>
+
+
+                                        </tr><!-- end ngRepeat: row in ApplicationDatalist --><tr ng-repeat="row in ApplicationDatalist" class="ng-scope">
+                                            <td ng-click="rowClicked(row)" ng-show="IsBulkRequired">
+                                                
+                                                <label class="chkcontainer">
+
+                                                    <input type="checkbox" ng-model="row.selected" ng-change="rowSelect()" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <!-- ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding">INV24FEB2020_2</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding ng-hide">INV24FEB2020_2</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Vendor Name</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">C2</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">C2</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">PO No</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">IT/PO/S/2019-20/041439</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">IT/PO/S/2019-20/041439</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Invoice Amt</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">1.00</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">1.00</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">Submitted By</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">Ajinkya Karnik</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">Ajinkya Karnik</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs --><td ng-repeat="lib  in libs" ng-show="lib.checked" class="ng-scope">
+                                             <label class="HideDiv ng-binding" style="min-width: 28%; word-wrap: break-word">App Type</label>
+                                                    <a ng-show="lib.status == 'disabled'" href="javascript:void(0)" ng-click="ValidateRedirection(this,'/Administration/ApplicationList/GetApplicationDetails?ApplicationName=R55Bd9x9HVZY03NSrTZ4tQ==&amp;AppSrNo=strAppSrNo&amp;MemoCaseNo=strAppMemoNo',row)" class="ng-binding ng-hide">Thru</a>
+                                                    <label ng-show="lib.status != 'disabled'" class="appLable ng-binding">Thru</label>
+
+                                            </td><!-- end ngRepeat: lib  in libs -->
+                                            <td class="text-right ng-hide" ng-show="!IsBulkRequired">
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modAction" ng-click="ApproveRejectPendingRequest(row[GetDetailsBy[0]],row[GetDetailsBy[1]])">Action</button>
+                                            </td>
+
+
+                                        </tr><!-- end ngRepeat: row in ApplicationDatalist -->
+
+                                    </tbody>
+
+                                </table>
+
+                                <div><span ng-show="!IsDataShowOnPageLoad" style="color: red" ng-bind="OnSearchMessage" class="ng-binding ng-hide"></span></div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal modal-primary fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modAction">
+    <div class="modal-dialog modal-sm ModalCenter">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h5 class="modal-title" id="exampleModalLabel">Action</h5>
+            </div>
+            <div class="modal-body">
+                <form name="myForm" class="ng-pristine ng-valid ng-valid-required">
+                    <div class="form-group" ng-class="{ 'has-error' : myForm.ActionTakenBy.$invalid &amp;&amp; !myForm.ActionTakenBy.$pristine }">
+                        <label for="recipient-name" class="col-form-label">Action Type</label>
+                        <select id="ddlActionType" class="form-control ng-pristine ng-untouched ng-valid ng-empty" name="ActionTakenBy" ng-model="ActionTakenBy">
+                            <option value="" selected="selected">Select</option>
+                            <!-- ngRepeat: item in ActionTypeList --><option ng-repeat="item in ActionTypeList" value="Approve" class="ng-binding ng-scope">Approve</option><!-- end ngRepeat: item in ActionTypeList --><option ng-repeat="item in ActionTypeList" value="Reject" class="ng-binding ng-scope">Reject</option><!-- end ngRepeat: item in ActionTypeList -->
+                        </select>
+                         <span ng-show="myForm.ActionTakenBy.$invalid &amp;&amp; !myForm.ActionTakenBy.$pristine" class="help-block ng-hide">Select Action</span>
+                        <input type="hidden" id="hdfActionApiPath" name="ActionApiPath" ng-model="ActionApiPath" ng-init="ActionApiPath='http://10.78.9.76/eprocmasapi/eProc/API/eProc/TakeActionOnMemo'" autocomplete="off" class="ng-pristine ng-untouched ng-valid ng-not-empty">
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : myForm.Remarks.$invalid &amp;&amp; !myForm.Remarks.$pristine }">
+                        <label for="message-text" class="col-form-label">Remarks:</label>
+                        <textarea class="form-control ng-pristine ng-untouched ng-valid ng-empty ng-valid-required" id="txtRemarks" ng-model="Remarks" ng-required="ActionTakenBy=='Reject'" restrict-special-character=""></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" id="btnSubmit" ng-disabled="myForm.$invalid || myForm.$pristine" ng-click="TakeActionOnRequest(ActionrequestNo)" disabled="disabled">Submit</button>
+                <div class="alert alert-block alert-danger fade in ng-hide" id="divError" ng-show="ShowError">
+                    <strong>MESSAGE::</strong> <span id="spnError" ng-bind="ActionMessage" class="ng-binding"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal  fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modActionResult">
+    <div class="modal-dialog modal-sm ModalCenter">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">Action Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <span id="spnActionMsg" ng-bind="ActionMessage" class="ng-binding"></span>
+            </div>
+            <div class="modal-footer">
+                <a type="button" id="lnkSuccessClose" class="btn btn-outline pull-left" href="/Administration/ApplicationList/DetailsList?AppName=R55Bd9x9HVZY03NSrTZ4tQ%3D%3D&amp;Count=199">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+                <div class="modal modal-primary fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modSearch">
+                    <div class="modal-dialog modal-sm ModalCenter">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                <h5 class="modal-title" id="exampleModalLabel">Search</h5>
+                            </div>
+                            <div class="modal-body">
+                                <form class="ng-pristine ng-valid">
+                                    <div class="form-group">
+
+                                        <label for="recipient-name" class="col-form-label">Search By</label>
+                                        <select id="ddlSearchBy" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="SearchBy">
+                                            <option value="" selected="selected">Select</option>
+                                            <!-- ngRepeat: item in ApplicationSearchList --><option ng-repeat="item in ApplicationSearchList" value="Invoice No" class="ng-binding ng-scope">Invoice No</option><!-- end ngRepeat: item in ApplicationSearchList --><option ng-repeat="item in ApplicationSearchList" value="PO No" class="ng-binding ng-scope">PO No</option><!-- end ngRepeat: item in ApplicationSearchList -->
+                                        </select>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">Search Text</label>
+
+
+                                        <input type="text" id="txtSearch" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="SearchValue" restrict-special-character="">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-warning" id="btnSearchSubmit" ng-click="SearchPendingApplist()">Search</button>
+                                <div class="alert alert-block alert-danger fade in hidden" id="divError">
+                                    <strong>MESSAGE::</strong> <span id="spnError"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+</div>
+
+
+<script src="/Scripts/MassAngularSript/App/ApplicationList_App.js?rndstr=8430846054253595"></script>
+<script src="/Scripts/MassAngularSript/Service/ApplicationList_Service.js?rndstr=8430846054253595"></script>
+<script src="/Scripts/MassAngularSript/Controller/ApplicationList_Controller.js?rndstr=8430846054253595"></script>
+
+
+<script type="text/javascript">
+    function getSearchParams(k) {
+        var p = {};
+        location.search.replace(/[?(&|&amp;)]+([^=(&|&amp;)]+)=([^(&|&amp;)]*)/gi, function (s, k, v) { p[k] = v })
+        return k ? p[k] : p;
+    }
+    var urlResp = getSearchParams();
+    if (!angular.isUndefined(urlResp.Sign) && urlResp.Sign != null) {
+        if (urlResp.Sign == 1) {
+            $("#modActionResult").modal('show');
+            $("#modActionResult").addClass("modal-success");
+            $("#modActionResult .modal-body").html("<span>Kindly check your document details in native application.</span>");
+        }
+    }
+</script>
+                <div class="row">
+                    <!-- Left col -->
+                    <section class="col-lg-7 connectedSortable" style="display: none">
+                        <!-- Custom tabs (Charts with tabs)-->
+                        <div class="nav-tabs-custom">
+                            <!-- Tabs within a box -->
+                            <ul class="nav nav-tabs pull-right">
+                                <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
+                                <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
+                                <li class="pull-left header"><i class="fa fa-inbox"></i>Sales</li>
+                            </ul>
+                            <div class="tab-content no-padding">
+                                <!-- Morris chart - Sales -->
+                                <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
+                                <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
+                            </div>
+                        </div>
+                        <!-- /.nav-tabs-custom -->
+
+
+
+                    </section>
+                    <!-- /.Left col -->
+                    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                    <section class="col-lg-5 connectedSortable" style="display: none">
+
+                        <!-- Map box -->
+                        <!-- /.box -->
+                        <div class="chart" id="line-chart" style="height: 250px;"></div>
+
+
+                    </section>
+                    <!-- right col -->
+                </div>
+            </div>
+
+
+            <div class="Loadermodal"></div>
+            <footer class="main-footer">
+                <div class="footer-left">
+                    <strong>
+                        Copyright © 2021
+                        <div class="bullet"></div>
+                        <a href="javascript::;">ICICI Bank Ltd.</a>
+                    </strong> All rights reserved.
+                </div>
+                <div class="footer-right"></div>
+            </footer>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        window.addEventListener("load", function () {
+            setTimeout(function () {
+                // This hides the address bar:
+                window.scrollTo(0, 1);
+            }, 0);
+        });
+
+        $(document).ready(function () {
+            // GetApplicationList();
+            $('input:checkbox').click(function () {
+                var value = $(this).val();
+
+            });
+
+            $("#btnSetFav").click(function () {
+                $("input[name='chkFav']").each(function () {
+                    var checked = $(this).find('input:radio:checked');
+                    if (checked.length == 0 && checked.context.checked) {
+                        var strAction = $(this).val();
+                        alert(strAction);
+                    }
+                });
+            });
+        });
+        function ShowFavouriteAppListPupop() {
+            $("#modFavourite").modal('show');
+        };
+        //$('.checkboxList input[type=checkbox]').change(function () {
+
+        //    var id = $(this).val(); // this gives me null
+        //    alert(id);
+        //    if (id != null) {
+        //        //do other things
+        //    }
+
+        //});
+
+        //$('#chkFavorite_0').change(function () {
+        //    alert('changed');
+        //});
+
+        //$('.checkboxList').on('change', 'input[type=checkbox]', function () {
+        //    alert('changed');
+        //    var id = $(this).val(); // this gives me null
+        //    if (id != null) {
+        //        //do other things
+        //    }
+
+        //});
+
+        function GetApplicationList() {
+            try {
+
+                $.ajax({
+                    url: '/Administration/Dashboard/GetApplicationFavList',
+                    type: "GET",
+                    beforeSend: function () {
+                        $(".modalBack").show();
+                    },
+                    complete: function () {
+                        $(".modalBack").hide();
+                    },
+                    success: function (data) {
+                        var appendRow = "";
+                        var appendRowtable = "";
+                        var count = 0;
+                        var countApp = 0;
+                        $.each(data, function (i, item) {
+                            appendRow = appendRow + "<tr><td>";
+
+                            if (item.MAS_FAV_STATUS == "A") {
+                                countApp = countApp + 1;
+                                appendRow = appendRow + "<input type='checkbox'  id='chkFavorite_" + count + "' value='" + item.SL_No + "' checked/>";
+                            }
+                            else {
+                                appendRow = appendRow + "<input type='checkbox'  id='chkFavorite_" + count + "' value='" + item.SL_No + "' />";
+                            }
+                            appendRow = appendRow + "</td><td><strong>" + item.Application_Name + "</strong></td></tr> ";
+                            count = count + 1;
+                        });
+                        $(".countFav").empty();
+                        $(".countFav").html(countApp);
+
+                        $("#tblfavourite").empty();
+                        $("#tblfavourite").append(appendRow);
+                        $('#lnkFav').attr('onclick', 'ShowFavouriteAppListPupop()');
+                    },
+                    error: function (request, message, error) {
+                        var objException = new Object();
+                        objException.ErrorMessage = message;
+                        objException.InnerExceptionMessage = error;
+                        objException.ControlerName = "AdminLayout.cshtml";
+                        objException.PageName = window.location.href;
+                        objException.PagePath = window.location.pathname;
+                        objException.ExceptionType = "Javascript Exception";
+                        objException.FunctionName = "GetApplicationList";
+                        MaintainExceptionLog(objException);//Admin layout page
+                        handleException(request, message, error);
+
+                        window.location.href = '/Home/ErrorHandling?PageName=Application.cshtml&amp;MethodName=GetMemoCaseList';
+                    }
+                });
+            } catch (e) {
+                var objException = new Object();
+                objException.ErrorMessage = e.message;
+                objException.InnerExceptionMessage = e.stack;
+                objException.ControlerName = "AdminLayout.cshtml";
+                objException.PageName = window.location.href;
+                objException.PagePath = window.location.pathname;
+                objException.ExceptionType = "Javascript Exception :" + e.name;
+                objException.FunctionName = "GetApplicationList";
+                MaintainExceptionLog(objException);//Admin layout page
+                window.location.href = '/Home/ErrorHandling?PageName=Application.cshtml&amp;MethodName=GetMemoCaseList';
+            }
+        }
+
+        function ConvertTableToJson() {
+            var rows = [];
+
+            $('#tblFavMaster tbody tr').each(function (i, n) {
+                debugger;
+                var $row = $(n);
+                var chk = $row.find('#chkFavorite_' + i).is(':checked');
+                var appSlNo = $row.find('#chkFavorite_' + i).val();
+                rows.push({
+                    SL_No: appSlNo,
+                    MAS_FAV_STATUS: chk == true ? "A" : "D"
+
+                });
+            });
+
+            return rows;
+        }
+
+        $("#btnSetFavourite").click(function () {
+            SetFavoriteApp();
+        });
+        function SetFavoriteApp() {
+            try {
+                var data = ConvertTableToJson();
+
+                $.ajax({
+                    url: '/Administration/Dashboard/SetFavoriteApp',
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ 'objList': data }),
+                    datatype: "json",
+                    beforeSend: function () {
+                        $(".modalBack").show();
+                    },
+                    complete: function () {
+                        $(".modalBack").hide();
+                    },
+                    success: function (data) {
+
+                        if (data.ActionResult == "SUCCESS") {
+                            // alert(data.ActionMessage);
+                            window.location.reload();
+                        }
+                        else {
+                            alert(data.Result.ActionMessage);
+
+                        }
+
+                    },
+                    error: function (request, message, error) {
+                        var objException = new Object();
+                        objException.ErrorMessage = message;
+                        objException.InnerExceptionMessage = error;
+                        objException.ControlerName = "AdminLayout.cshtml";
+                        objException.PageName = window.location.href;
+                        objException.PagePath = window.location.pathname;
+                        objException.ExceptionType = "Javascript Exception";
+                        objException.FunctionName = "GetApplicationList";
+                        MaintainExceptionLog(objException);//Admin layout page
+                        handleException(request, message, error);
+
+                        window.location.href = '/Home/ErrorHandling?PageName=Application.cshtml&amp;MethodName=GetMemoCaseList';
+                    }
+                });
+            } catch (e) {
+                var objException = new Object();
+                objException.ErrorMessage = e.message;
+                objException.InnerExceptionMessage = e.stack;
+                objException.ControlerName = "AdminLayout.cshtml";
+                objException.PageName = window.location.href;
+                objException.PagePath = window.location.pathname;
+                objException.ExceptionType = "Javascript Exception :" + e.name;
+                objException.FunctionName = "GetApplicationList";
+                MaintainExceptionLog(objException);//Admin layout page
+                window.location.href = '/Home/ErrorHandling?PageName=Application.cshtml&amp;MethodName=GetMemoCaseList';
+            }
+        }
+
+        function handleException(request, message, error) {
+
+            var msg = "";
+            msg += "Code: " + request.status + "\n";
+            msg += "Text: " + request.statusText + "\n";
+            if (request.responseJSON != null) {
+                msg += "Message" +
+                    request.responseJSON.Message + "\n";
+            }
+            console.log(msg);
+        }
+    </script>
+    
+
+
+</body></html>
