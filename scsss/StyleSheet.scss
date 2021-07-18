@@ -1,0 +1,337 @@
+﻿@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap");
+
+:root {
+  --f-Nunito: "Nunito", sans-serif;
+  --fs-default: 14px;
+  --c-black: #000;
+  --c-white: #fff;
+  --c-blue: #0d75b4;
+}
+
+/*--------------------------------------------------------------
+# Base
+--------------------------------------------------------------*/
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+  font-family: var(--f-Nunito);
+  font-size: var(--fs-default);
+  color: var(--c-black);
+}
+
+/*--------------------------------------------------------------
+# header
+--------------------------------------------------------------*/
+.header {
+  height: 60px;
+  box-shadow: 0 2px 5px #eeeeee;
+}
+
+/*--------------------------------------------------------------
+# main
+--------------------------------------------------------------*/
+.main-wrapper {
+  position: relative;
+  min-height: 665px;
+
+  @media (max-width: 991.98px) {
+    min-height: unset;
+  }
+
+  @media (max-width: 575.98px) {
+    text-align: center;
+    background: #f7f7f7;
+  }
+}
+
+.road-bg {
+  position: absolute;
+  bottom: 90px;
+  height: 270px;
+  width: 100%;
+  background: url(../img/bg.png) no-repeat;
+  background-size: 105% 100%;
+  pointer-events: none;
+  background-position: left;
+  @media (max-width: 991.98px) {
+    display: none;
+  }
+}
+
+.finish-line {
+  position: absolute;
+  height: 120px;
+  width: 10px;
+  background-color: #cd214e;
+  pointer-events: none;
+  right: 173px;
+  bottom: 63px;
+  @media (max-width: 991.98px) {
+    display: none;
+  }
+}
+
+.flag-man {
+  position: absolute;
+  bottom: 15px;
+  right: 27px;
+  height: 165px;
+  width: 125px;
+  background: url(../img/flag-man.png) no-repeat;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  pointer-events: none;
+  @media (max-width: 991.98px) {
+    display: none;
+  }
+}
+
+.walking-trak {
+  position: absolute;
+  bottom: 120px;
+  left: 160px;
+  right: 160px;
+  height: 140px;
+  @media (max-width: 991.98px) {
+    display: none;
+  }
+
+  .walking-man {
+    height: 145px;
+    position: absolute;
+    left: 0;
+    transition: left 1s ease-in-out;
+    @media (max-width: 991.98px) {
+      display: none;
+    }
+  }
+}
+
+.slide {
+  padding: 45px 10px;
+  display: none;
+
+  @media (max-width: 767.98px) {
+    padding: 25px 10px 10px;
+  }
+
+  &.show {
+    display: block;
+  }
+
+  .slide-title {
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: capitalize;
+
+    @media (max-width: 767.98px) {
+      font-size: 18px;
+    }
+  }
+}
+
+.form-wrapper {
+  padding: 35px;
+  @media (max-width: 767.98px) {
+    padding: 15px 0;
+  }
+
+  @media (min-width: 992px) {
+    .row {
+      margin: 0 -25px;
+    }
+
+    [class*="col-"] {
+      padding: 0 25px;
+    }
+
+    .cust-3 {
+      -ms-flex: 0 0 28%;
+      flex: 0 0 28%;
+      max-width: 28%;
+    }
+  }
+  @media (max-width: 575.98px) {
+    [class*="col-"]:first-child .radio-item {
+      margin-top: 0;
+    }
+  }
+}
+
+.pre-btn {
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
+  font-size: 23px;
+  color: var(--c-blue);
+  border: none;
+  position: absolute;
+  left: 60px;
+  border: none;
+  top: calc(50% - 40px);
+  @media (max-width: 991.98px) {
+    left: 15px;
+  }
+  @media (max-width: 575.98px) {
+    position: static;
+    border-radius: 5px;
+    padding: 8px 15px;
+    width: auto;
+    font-size: 12px;
+    height: auto;
+    margin: 0 0px 15px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+}
+
+/*--------------------------------------------------------------
+# Radio box
+--------------------------------------------------------------*/
+
+.radio-item {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-bottom: 40px;
+
+  @media (max-width: 575.98px) {
+    margin-bottom: 0px;
+    margin-top: 20px;
+  }
+
+  .label-box {
+    position: relative;
+    margin-bottom: 0;
+    vertical-align: top;
+    background: var(--c-blue);
+    border-radius: 40px;
+    display: flex;
+    height: 80px;
+    align-items: center;
+    cursor: pointer;
+    padding-right: 75px;
+
+    &:hover {
+      background: #2795d8;
+    }
+
+    @media (max-width: 575.98px) {
+      height: 55px;
+      padding-right: 50px;
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 25px;
+      width: 25px;
+      border-radius: 50%;
+      box-sizing: border-box;
+      background: #fff;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
+      display: none;
+    }
+
+    &:after {
+      content: "\f00c";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-font-smoothing: antialiased;
+      display: inline-block;
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      line-height: 1;
+      position: absolute;
+      left: -7px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--c-blue);
+      display: none;
+    }
+  }
+
+  .case-name {
+    font-size: 16px;
+    color: var(--c-white);
+    padding: 10px 5px 10px 20px;
+    text-align: center;
+    line-height: 24px;
+    width: 100%;
+    font-weight: 600;
+    @media (max-width: 1199.98px) {
+      font-size: 14px;
+      line-height: 21px;
+    }
+    @media (max-width: 991.98px) {
+      font-size: 13px;
+    }
+  }
+
+  .case-icon {
+    height: 80px;
+    width: 80px;
+    background: #fafafa;
+    border-radius: 50%;
+    position: absolute;
+    right: -5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    color: #3f3d56;
+
+    @media (max-width: 575.98px) {
+      height: 55px;
+      width: 55px;
+      font-size: 16px;
+    }
+  }
+
+  .custom-control-input:checked ~ .label-box {
+    &:before {
+      display: block;
+    }
+
+    &:after {
+      display: block;
+    }
+  }
+}
+
+/*--------------------------------------------------------------
+# result Slide 
+--------------------------------------------------------------*/
+.resultSlide {
+  padding: 45px 10px;
+  display: none;
+
+  @media (max-width: 767.98px) {
+    padding: 25px 10px 10px;
+  }
+
+  &.show {
+    display: block;
+  }
+  .result-title {
+    font-size: 45px;
+    font-weight: 600;
+
+    @media (max-width: 575.98px) {
+      font-size: 28px;
+    }
+  }
+}
